@@ -24,19 +24,27 @@ base_url <- function(url = "https://api.alpaca.markets") {
 #'
 #' @noRd
 GET <- function(
-    path
-    # query = list()
+    path,
+    query = list()
 ) {
-  request(cache$BASE_URL) |>
+  req <- request(cache$BASE_URL) |>
     req_url_path_append(path) |>
     req_headers(
-      'APCA-API-KEY-ID' = ALPACA_KEY,
-      'APCA-API-SECRET-KEY' = ALPACA_SECRET_KEY
+      'APCA-API-KEY-ID' = cache$ALPACA_API_KEY,
+      'APCA-API-SECRET-KEY' = cache$ALPACA_API_SECRET
     ) |>
     req_headers(
       "Accept" = "application/json",
       "Content-Type" = "application/octet-stream"
-    ) |>
+    )
+
+  if (length(query)) {
+    req <- do.call(req_url_query, c(list(.req = req, .multi = "comma"), query))
+  }
+
+  req |> req_dry_run()
+
+  req |>
     req_perform() |>
     resp_body_json()
 }
