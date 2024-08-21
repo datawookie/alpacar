@@ -8,6 +8,10 @@ authenticate(
   secret = Sys.getenv("ALPACA_SECRET_KEY")
 )
 
-quotes_latest(c("AAPL", "TSLA"))
+# quotes_latest(c("AAPL", "TSLA"))
 
-quotes_history("AAPL")
+# xxx <- quotes_history("AAPL")
+
+condition_codes("C")
+
+exchange_codes()

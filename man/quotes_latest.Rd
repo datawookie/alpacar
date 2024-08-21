@@ -13,7 +13,7 @@ quotes_latest(symbols)
 A data frame.
 }
 \description{
-Get latest quotes for one or more stocks.
+To make sense of the `cond` column see the output from `condition_codes()`.
 }
 \examples{
 \dontrun{
