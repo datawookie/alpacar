@@ -48,7 +48,7 @@ assets <- function(
     query$attributes <- attributes
   }
 
-  GET("assets", query=query) |>
+  GET(base_url(), "assets", query=query) |>
     map(~ modify_at(.x, "attributes", ~ paste(.x, collapse = ", "))) |>
     bind_rows()
 }

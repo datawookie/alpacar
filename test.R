@@ -8,6 +8,6 @@ authenticate(
   secret = Sys.getenv("ALPACA_SECRET_KEY")
 )
 
-things <- assets(status = "active", attributes = c("has_options"))
+quotes_latest(c("AAPL", "TSLA"))
 
-dim(things)
+quotes_history("AAPL")

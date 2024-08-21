@@ -1,3 +1,5 @@
+BASE_URL_MARKET_DATA <- "https://data.alpaca.markets/v2"
+
 #' Set or query API base URL
 #'
 #' @param url Base URL (with or without trailling slash).
@@ -13,7 +15,7 @@
 #' base_url("https://paper-api.alpaca.markets/v2")
 base_url <- function(url = "https://api.alpaca.markets") {
   if (!is.null(url)) {
-    # Ensure that URL has a trailling slash.
+    # Ensure that URL has a trailing slash.
     cache$BASE_URL <- ifelse(grepl("/$", url), url, paste0(url, "/"))
   }
 
@@ -24,10 +26,11 @@ base_url <- function(url = "https://api.alpaca.markets") {
 #'
 #' @noRd
 GET <- function(
+    url,
     path,
     query = list()
 ) {
-  req <- request(cache$BASE_URL) |>
+  req <- request(url) |>
     req_url_path_append(path) |>
     req_headers(
       'APCA-API-KEY-ID' = cache$ALPACA_API_KEY,
@@ -42,7 +45,7 @@ GET <- function(
     req <- do.call(req_url_query, c(list(.req = req, .multi = "comma"), query))
   }
 
-  req |> req_dry_run()
+  req |> req_dry_run(redact_headers = FALSE)
 
   req |>
     req_perform() |>
