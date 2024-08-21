@@ -8,4 +8,6 @@ authenticate(
   secret = Sys.getenv("ALPACA_SECRET_KEY")
 )
 
-print(account())
+things <- assets(status = "active", attributes = c("has_options"))
+
+dim(things)
