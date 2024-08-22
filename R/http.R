@@ -1,3 +1,5 @@
+BASE_URL_PAPER_TRADING <- "https://paper-api.alpaca.markets/v2"
+BASE_URL <- "https://api.alpaca.markets"
 BASE_URL_MARKET_DATA <- "https://data.alpaca.markets/v2"
 
 #' Set or query API base URL
@@ -13,7 +15,7 @@ BASE_URL_MARKET_DATA <- "https://data.alpaca.markets/v2"
 #' base_url("https://api.alpaca.markets")
 #' # The paper-trading API.
 #' base_url("https://paper-api.alpaca.markets/v2")
-base_url <- function(url = "https://api.alpaca.markets") {
+base_url <- function(url = NULL) {
   if (!is.null(url)) {
     # Ensure that URL has a trailing slash.
     cache$BASE_URL <- ifelse(grepl("/$", url), url, paste0(url, "/"))

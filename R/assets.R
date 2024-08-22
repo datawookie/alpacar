@@ -15,16 +15,16 @@ ATTRIBUTES <- c("fractional_eh_enabled", "has_options", "options_late_close", "p
 #' \dontrun{
 #' assets()
 #' }
-assets <- function(
+assets_list <- function(
     status = NULL,
     class = "us_equity",
     exchange = NULL,
     attributes = NULL
 ) {
-  if (!status %in% c("active", "inactive")) {
+  if (!is.null(status) && !status %in% c("active", "inactive")) {
     stop("Invalid status: must be 'active' or 'inactive'.")
   }
-  if (!class %in% c("us_equity")) {
+  if (!is.null(class) && !class %in% c("us_equity")) {
     stop("Invalid class: must be 'us_equity'.")
   }
   if (!is.null(exchange) && !exchange %in% EXCHANGES) {

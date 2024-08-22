@@ -12,7 +12,7 @@
 #' options("AAPL")
 #' options("AAPL", "put")
 #' }
-options <- function(
+options_list <- function(
     underlying_symbols,
     type = NULL,
     expiration_date_gte = NULL,
@@ -38,7 +38,7 @@ options <- function(
   pages = list()
 
   while (TRUE) {
-    data <- GET(base_url, "options/contracts", query=query)
+    data <- GET(base_url(), "options/contracts", query=query)
 
     pages <- c(pages, data$option_contracts)
 

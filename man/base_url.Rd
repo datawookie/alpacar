@@ -4,7 +4,7 @@
 \alias{base_url}
 \title{Set or query API base URL}
 \usage{
-base_url(url = "https://api.alpaca.markets")
+base_url(url = NULL)
 }
 \arguments{
 \item{url}{Base URL (with or without trailling slash).}

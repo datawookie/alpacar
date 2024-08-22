@@ -8,5 +8,5 @@
 #' account()
 #' }
 account <- function() {
-  GET("account")
+  GET(base_url(), "account")
 }
