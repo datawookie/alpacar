@@ -11,6 +11,8 @@ authenticate(
   secret = Sys.getenv("ALPACA_SECRET_KEY")
 )
 
+account_activity()
+
 # positions_list()
 
 # print(bars("SPY", "1Hour", "2024-08-19", "2024-08-19"))
@@ -23,4 +25,4 @@ authenticate(
 
 # print(trades("SPY", "2024-08-01", "2024-08-21"))
 
-order_create("AAPL", "buy", 1)
+# order_create("AAPL", "buy", 1)
