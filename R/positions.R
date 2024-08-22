@@ -1,5 +1,3 @@
-# https://paper-api.alpaca.markets/v2/positions
-
 #' List open positions.
 #'
 #' @return A data frame.

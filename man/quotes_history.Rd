@@ -4,10 +4,14 @@
 \alias{quotes_history}
 \title{Get historic quotes for one or more stocks.}
 \usage{
-quotes_history(symbols)
+quotes_history(symbols, start = NULL, end = NULL)
 }
 \arguments{
 \item{symbols}{One or more symbols.}
+
+\item{start}{Start date (YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ).}
+
+\item{end}{End date (YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ).}
 }
 \value{
 A data frame.
@@ -17,7 +21,10 @@ To make sense of the `cond` column see the output from `condition_codes()`.
 }
 \examples{
 \dontrun{
-quotes_latest("AAPL")
-quotes_latest(c("AAPL", "TSLA"))
+# Quotes for current day (none if market not yet open).
+quotes <- quotes_history("AAPL")
+quotes_history(c("AAPL", "TSLA"))
+# Quotes for specific time period.
+quotes <- quotes_history("AAPL", "2024-08-01T09:00:00Z", "2024-08-01T09:05:00Z")
 }
 }

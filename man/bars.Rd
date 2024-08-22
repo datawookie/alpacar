@@ -2,20 +2,28 @@
 % Please edit documentation in R/stocks.R
 \name{bars}
 \alias{bars}
-\title{Get historic bars}
+\title{Get historic bars.}
 \usage{
 bars(symbols, timeframe, start, end)
 }
 \arguments{
 \item{symbols}{One or more symbols.}
+
+\item{timeframe}{Timeframe for bars. Expressed in various units: `Min` or `T` for minutes, `Hour` or `H` for hours, `Day` or `D` for days, `Week` or `W` for weeks and `Month` or `M` for months.}
+
+\item{start}{Start date (YYYY-MM-DD).}
+
+\item{end}{End date (YYYY-MM-DD).}
 }
 \value{
 A data frame.
 }
 \description{
-Get historic bars
+Get historic bars.
 }
 \examples{
 \dontrun{
+bars("SPY", "1Hour", "2024-08-19", "2024-08-19")
+bars("SPY", "5T", "2024-08-19", "2024-08-19")
 }
 }
