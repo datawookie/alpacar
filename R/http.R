@@ -30,7 +30,8 @@ base_url <- function(url = NULL) {
 GET <- function(
     url,
     path,
-    query = list()
+    query = list(),
+    debug = FALSE
 ) {
   req <- request(url) |>
     req_url_path_append(path) |>
@@ -47,7 +48,7 @@ GET <- function(
     req <- do.call(req_url_query, c(list(.req = req, .multi = "comma"), query))
   }
 
-  req |> req_dry_run(redact_headers = FALSE)
+  if (debug) req |> req_dry_run(redact_headers = FALSE)
 
   req |>
     req_perform() |>
@@ -60,7 +61,8 @@ GET <- function(
 POST <- function(
     url,
     path,
-    body = list()
+    body = list(),
+    debug = FALSE
 ) {
   req <- request(url) |>
     req_method("POST") |>
@@ -75,7 +77,7 @@ POST <- function(
     ) |>
     req_body_json(body)
 
-  req |> req_dry_run(redact_headers = FALSE)
+  if (debug) req |> req_dry_run(redact_headers = FALSE)
 
   req |>
     req_perform() |>
