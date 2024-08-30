@@ -2,6 +2,7 @@
 
 export(account)
 export(account_activity)
+export(actions)
 export(assets_list)
 export(authenticate)
 export(bars)
