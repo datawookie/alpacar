@@ -8,7 +8,8 @@ options_list(
   underlying_symbols,
   type = NULL,
   expiration_date_gte = NULL,
-  expiration_date_lte = NULL
+  expiration_date_lte = NULL,
+  complete = FALSE
 )
 }
 \arguments{
@@ -16,7 +17,9 @@ options_list(
 
 \item{expiration_date_gte}{Minimum expiration date.}
 
-\item{expiration_date_lte}{Maximum expiration date.}
+\item{expiration_date_lte}{Maximum expiration date. By default this is set to the next weekend.}
+
+\item{complete}{Whether to retrieve complete chain with all future expiration dates.}
 }
 \value{
 A data frame.

@@ -2,7 +2,10 @@
 #'
 #' @param type Filter contracts by the type (`"call"` or `"put"`).
 #' @param expiration_date_gte Minimum expiration date.
-#' @param expiration_date_lte Maximum expiration date.
+#' @param expiration_date_lte Maximum expiration date. By default this is set to
+#'  the next weekend.
+#' @param complete Whether to retrieve complete chain with all future expiration
+#'  dates.
 #'
 #' @return A data frame.
 #' @export
@@ -16,8 +19,8 @@ options_list <- function(
     underlying_symbols,
     type = NULL,
     expiration_date_gte = NULL,
-    expiration_date_lte = NULL
-) {
+    expiration_date_lte = NULL,
+    complete = FALSE) {
   query <- list()
 
   query$underlying_symbols <- underlying_symbols
@@ -34,11 +37,17 @@ options_list <- function(
   if (!is.null(expiration_date_lte)) {
     query$expiration_date_lte <- expiration_date_lte
   }
+  if (complete) {
+    # Expiration date 5 years into the future. This is conservative. LEAPS have
+    # expiration dates up to 3 years into the future.
+    #
+    query$expiration_date_lte <- Sys.Date() %m+% years(5)
+  }
 
-  pages = list()
+  pages <- list()
 
   while (TRUE) {
-    data <- GET(base_url(), "options/contracts", query=query)
+    data <- GET(base_url(), "options/contracts", query = query)
 
     pages <- c(pages, data$option_contracts)
 
