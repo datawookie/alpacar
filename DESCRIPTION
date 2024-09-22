@@ -18,4 +18,4 @@ Imports:
     purrr,
     httr2,
     lubridate,
-    dotenv
+    jsonlite
