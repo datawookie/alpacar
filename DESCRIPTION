@@ -17,4 +17,5 @@ Imports:
     dplyr,
     purrr,
     httr2,
-    lubridate
+    lubridate,
+    dotenv
