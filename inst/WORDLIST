@@ -6,9 +6,11 @@ cre
 dotenv
 dplyr
 gmail
+httpuv
 httr
 jsonlite
 LazyData
 lubridate
 purrr
+rlang
 RoxygenNote

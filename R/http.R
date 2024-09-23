@@ -31,13 +31,12 @@ GET <- function(
     url,
     path,
     query = list(),
-    debug = FALSE
-) {
+    debug = FALSE) {
   req <- request(url) |>
     req_url_path_append(path) |>
     req_headers(
-      'APCA-API-KEY-ID' = cache$ALPACA_API_KEY,
-      'APCA-API-SECRET-KEY' = cache$ALPACA_API_SECRET
+      "APCA-API-KEY-ID" = cache$ALPACA_API_KEY,
+      "APCA-API-SECRET-KEY" = cache$ALPACA_API_SECRET
     ) |>
     req_headers(
       accept = "application/json",
@@ -50,8 +49,14 @@ GET <- function(
 
   if (debug) req |> req_dry_run(redact_headers = FALSE)
 
-  req |>
-    req_perform() |>
+  withCallingHandlers(
+    response <- req |> req_perform(),
+    error = function(err) {
+      rlang::abort("Request failed.", parent = err)
+    }
+  )
+
+  response |>
     resp_body_json()
 }
 
@@ -62,14 +67,13 @@ POST <- function(
     url,
     path,
     body = list(),
-    debug = FALSE
-) {
+    debug = FALSE) {
   req <- request(url) |>
     req_method("POST") |>
     req_url_path_append(path) |>
     req_headers(
-      'APCA-API-KEY-ID' = cache$ALPACA_API_KEY,
-      'APCA-API-SECRET-KEY' = cache$ALPACA_API_SECRET
+      "APCA-API-KEY-ID" = cache$ALPACA_API_KEY,
+      "APCA-API-SECRET-KEY" = cache$ALPACA_API_SECRET
     ) |>
     req_headers(
       accept = "application/json",
