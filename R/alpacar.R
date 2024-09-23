@@ -3,5 +3,11 @@
 #' @import purrr
 #' @import httr2
 #' @import lubridate
-#' @import jsonlite
 NULL
+
+globalVariables(
+  c(
+    "GET",
+    "base_url"
+  )
+)
