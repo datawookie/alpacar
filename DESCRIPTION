@@ -17,6 +17,7 @@ Imports:
     dplyr,
     purrr,
     httr2,
+    httpuv,
     lubridate,
     jsonlite,
     rlang
