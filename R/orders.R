@@ -25,7 +25,8 @@ order_create <- function(
     symbol,
     side,
     quantity,
-    type = "market") {
+    type = "market",
+    limit_price = NA) {
   body <- list(
     symbol = symbol,
     qty = quantity,
@@ -33,6 +34,10 @@ order_create <- function(
     type = type,
     time_in_force = "day"
   )
+
+  if (type == "limit") {
+    body$limit_price <- limit_price
+  }
 
   POST(base_url(), "orders", body)
 }

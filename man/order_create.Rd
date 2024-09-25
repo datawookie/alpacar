@@ -4,11 +4,16 @@
 \alias{order_create}
 \title{Place an order.}
 \usage{
-order_create(symbol, side, quantity)
+order_create(symbol, side, quantity, type = "market", limit_price = NA)
 }
 \value{
 A data frame.
 }
 \description{
 Place an order.
+}
+\examples{
+\dontrun{
+order_create("SPY", "buy", 1, "limit")
+}
 }
