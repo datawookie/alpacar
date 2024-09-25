@@ -7,8 +7,7 @@
 #' \dontrun{
 #' positions_list()
 #' }
-orders_list <- function(
-) {
+orders_list <- function() {
   GET(base_url(), "orders") |>
     bind_rows()
 }
@@ -17,16 +16,21 @@ orders_list <- function(
 #'
 #' @return A data frame.
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' order_create("SPY", "buy", 1, "limit")
+#' }
 order_create <- function(
     symbol,
     side,
-    quantity
-) {
+    quantity,
+    type = "market") {
   body <- list(
     symbol = symbol,
     qty = quantity,
     side = side,
-    type = "market",
+    type = type,
     time_in_force = "day"
   )
 
