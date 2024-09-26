@@ -51,8 +51,8 @@ GET <- function(
 
   withCallingHandlers(
     response <- req |> req_perform(),
-    error = function(err) {
-      rlang::abort("Request failed.", parent = err)
+    error = function(error) {
+      rlang::abort("Request failed.", parent = error)
     }
   )
 
@@ -83,7 +83,18 @@ POST <- function(
 
   if (debug) req |> req_dry_run(redact_headers = FALSE)
 
-  req |>
-    req_perform() |>
+  # TODO: On 422 error there is useful information in the response. Turn this
+  # into a meaningful error message.
+  #
+  # For example, if you try to create a limit order without giving limit_price.
+  #
+  withCallingHandlers(
+    response <- req |> req_perform(),
+    error = function(error) {
+      rlang::abort("Request failed.", parent = error)
+    }
+  )
+
+  response |>
     resp_body_json()
 }
