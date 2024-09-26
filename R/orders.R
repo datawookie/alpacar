@@ -36,7 +36,9 @@ order_create <- function(
   )
 
   if (type == "limit") {
-    body$limit_price <- limit_price
+    if (is.na(limit_price)) stop("Must provide limit_price!")
+
+    body$limit_price <- as.character(limit_price)
   }
 
   POST(base_url(), "orders", body)
