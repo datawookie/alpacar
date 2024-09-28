@@ -2,6 +2,26 @@ BASE_URL_PAPER_TRADING <- "https://paper-api.alpaca.markets/v2"
 BASE_URL <- "https://api.alpaca.markets"
 BASE_URL_MARKET_DATA <- "https://data.alpaca.markets/v2"
 
+handle_request <- function(request, debug) {
+  if (debug) request |> req_dry_run(redact_headers = FALSE)
+
+  # Use tryCatch() instead because it's for errors.
+
+  withCallingHandlers(
+    response <- request |> req_perform(),
+    error = function(cnd) {
+      message(paste0("⛔ Request failed!: ", conditionMessage(cnd), "\n"))
+
+      # Print details of failed request.
+      request |> req_dry_run(redact_headers = FALSE)
+      cat("\n")
+    }
+  )
+
+  response |>
+    resp_body_json()
+}
+
 #' Set or query API base URL
 #'
 #' @param url Base URL (with or without trailling slash).
@@ -47,17 +67,7 @@ GET <- function(
     req <- do.call(req_url_query, c(list(.req = req, .multi = "comma"), query))
   }
 
-  if (debug) req |> req_dry_run(redact_headers = FALSE)
-
-  withCallingHandlers(
-    response <- req |> req_perform(),
-    error = function(error) {
-      rlang::abort("Request failed.", parent = error)
-    }
-  )
-
-  response |>
-    resp_body_json()
+  handle_request(req, debug)
 }
 
 #' GET
@@ -83,18 +93,5 @@ POST <- function(
 
   if (debug) req |> req_dry_run(redact_headers = FALSE)
 
-  # TODO: On 422 error there is useful information in the response. Turn this
-  # into a meaningful error message.
-  #
-  # For example, if you try to create a limit order without giving limit_price.
-  #
-  withCallingHandlers(
-    response <- req |> req_perform(),
-    error = function(error) {
-      rlang::abort("Request failed.", parent = error)
-    }
-  )
-
-  response |>
-    resp_body_json()
+  handle_request(req, debug)
 }
