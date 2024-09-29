@@ -4,7 +4,14 @@
 \alias{bars}
 \title{Get historic bars.}
 \usage{
-bars(symbols, timeframe, start, end)
+bars(
+  symbols,
+  timeframe,
+  start = NA,
+  end = NA,
+  limit = 1000,
+  adjustment = "all"
+)
 }
 \arguments{
 \item{symbols}{One or more symbols.}

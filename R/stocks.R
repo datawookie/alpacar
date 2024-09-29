@@ -28,7 +28,7 @@ quotes_fix <- function(quotes) {
       mutate(
         ask_exch = ifelse(ask_exch == " ", NA, ask_exch),
         bid_exch = ifelse(bid_exch == " ", NA, bid_exch),
-        cond = cond |> map_chr(~ paste(.x, collapse=""))
+        cond = cond |> map_chr(~ paste(.x, collapse = ""))
       ) |>
       select(symbol, timestamp, everything())
   }
@@ -61,7 +61,7 @@ trades_fix <- function(quotes) {
       exch = x
     ) |>
     mutate(
-      cond = cond |> map_chr(~ gsub(" ", "", paste(.x, collapse="")))
+      cond = cond |> map_chr(~ gsub(" ", "", paste(.x, collapse = "")))
     ) |>
     select(symbol, timestamp, cond, everything())
 }
@@ -81,13 +81,12 @@ trades_fix <- function(quotes) {
 #' quotes_latest(c("AAPL", "TSLA"))
 #' }
 quotes_latest <- function(
-    symbols
-) {
+    symbols) {
   query <- list()
 
   query$symbols <- symbols
 
-  GET(BASE_URL_MARKET_DATA, "stocks/quotes/latest", query=query)$quotes |>
+  GET(BASE_URL_MARKET_DATA, "stocks/quotes/latest", query = query)$quotes |>
     bind_rows(.id = "symbol") |>
     quotes_fix()
 }
@@ -114,18 +113,17 @@ quotes_latest <- function(
 quotes_history <- function(
     symbols,
     start = NULL,
-    end = NULL
-) {
+    end = NULL) {
   query <- list()
 
   query$symbols <- symbols
   if (!is.null(start)) query$start <- start
   if (!is.null(end)) query$end <- end
 
-  pages = list()
+  pages <- list()
 
   while (TRUE) {
-    data <- GET(BASE_URL_MARKET_DATA, "stocks/quotes", query=query)
+    data <- GET(BASE_URL_MARKET_DATA, "stocks/quotes", query = query)
 
     pages <- c(
       pages,
@@ -142,7 +140,10 @@ quotes_history <- function(
     }
   }
 
-  pages |> map(bind_rows) |> bind_rows(.id = "symbol") |> quotes_fix()
+  pages |>
+    map(bind_rows) |>
+    bind_rows(.id = "symbol") |>
+    quotes_fix()
 }
 
 #' Get condition codes.
@@ -158,13 +159,12 @@ quotes_history <- function(
 #' }
 condition_codes <- function(
     tape,
-    ticktype = "quote"
-) {
+    ticktype = "quote") {
   query <- list()
 
   query$tape <- tape
 
-  GET(BASE_URL_MARKET_DATA, paste0("stocks/meta/conditions/", ticktype), query=query) |>
+  GET(BASE_URL_MARKET_DATA, paste0("stocks/meta/conditions/", ticktype), query = query) |>
     stack() |>
     setNames(c("meaning", "code")) |>
     select(code, everything())
@@ -182,8 +182,7 @@ condition_codes <- function(
 #' \dontrun{
 #' exchange_codes()
 #' }
-exchange_codes <- function(
-) {
+exchange_codes <- function() {
   GET(BASE_URL_MARKET_DATA, "stocks/meta/exchanges") |>
     stack() |>
     setNames(c("name", "code")) |>
@@ -193,7 +192,9 @@ exchange_codes <- function(
 #' Get historic bars.
 #'
 #' @param symbols One or more symbols.
-#' @param timeframe Timeframe for bars. Expressed in various units: `Min` or `T` for minutes, `Hour` or `H` for hours, `Day` or `D` for days, `Week` or `W` for weeks and `Month` or `M` for months.
+#' @param timeframe Timeframe for bars. Expressed in various units: `Min` or `T`
+#'   for minutes, `Hour` or `H` for hours, `Day` or `D` for days, `Week` or `W`
+#'   for weeks and `Month` or `M` for months.
 #' @param start Start date (YYYY-MM-DD).
 #' @param end End date (YYYY-MM-DD).
 #'
@@ -208,20 +209,23 @@ exchange_codes <- function(
 bars <- function(
     symbols,
     timeframe,
-    start,
-    end
-) {
+    start = NA,
+    end = NA,
+    limit = 1000,
+    adjustment = "all") {
   query <- list()
 
   query$symbols <- symbols
   query$timeframe <- timeframe
-  query$start <- start
-  query$end <- end
+  query$adjustment <- adjustment
+  if (!is.na(start)) query$start <- start
+  if (!is.na(end)) query$end <- end
+  if (!is.na(limit)) query$limit <- limit
 
-  pages = list()
+  pages <- list()
 
   while (TRUE) {
-    data <- GET(BASE_URL_MARKET_DATA, "stocks/bars", query=query)
+    data <- GET(BASE_URL_MARKET_DATA, "stocks/bars", query = query)
 
     pages <- c(
       pages,
@@ -236,7 +240,10 @@ bars <- function(
     }
   }
 
-  pages |> map(bind_rows) |> bind_rows(.id = "symbol") |> bars_fix()
+  pages |>
+    map(bind_rows) |>
+    bind_rows(.id = "symbol") |>
+    bars_fix()
 }
 
 #' Get trades.
@@ -251,13 +258,13 @@ bars <- function(
 #'
 #' @examples
 #' \dontrun{
+#'
 #' }
 trades <- function(
     symbols,
     start,
     end,
-    feed = "iex"
-) {
+    feed = "iex") {
   query <- list()
 
   query$symbols <- symbols
@@ -265,10 +272,10 @@ trades <- function(
   query$end <- end
   query$feed <- feed
 
-  pages = list()
+  pages <- list()
 
   while (TRUE) {
-    data <- GET(BASE_URL_MARKET_DATA, "stocks/trades", query=query)
+    data <- GET(BASE_URL_MARKET_DATA, "stocks/trades", query = query)
 
     pages <- c(
       pages,
@@ -285,5 +292,8 @@ trades <- function(
     }
   }
 
-  pages |> map(bind_rows) |> bind_rows(.id = "symbol") |> trades_fix()
+  pages |>
+    map(bind_rows) |>
+    bind_rows(.id = "symbol") |>
+    trades_fix()
 }

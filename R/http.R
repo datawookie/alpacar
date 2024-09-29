@@ -3,20 +3,29 @@ BASE_URL <- "https://api.alpaca.markets"
 BASE_URL_MARKET_DATA <- "https://data.alpaca.markets/v2"
 
 handle_request <- function(request, debug) {
-  if (debug) request |> req_dry_run(redact_headers = FALSE)
-
-  # Use tryCatch() instead because it's for errors.
-
   withCallingHandlers(
     response <- request |> req_perform(),
     error = function(cnd) {
       message(paste0("⛔ Request failed!: ", conditionMessage(cnd), "\n"))
+
+      response <- last_response()
+      # Get response message.
+      info <- response |>
+        resp_body_string() |>
+        fromJSON() |>
+        pluck("message")
+      message("Message: ", info, "\n")
 
       # Print details of failed request.
       request |> req_dry_run(redact_headers = FALSE)
       cat("\n")
     }
   )
+
+  if (debug) {
+    request |> req_dry_run(redact_headers = FALSE)
+    print(response |> resp_body_string())
+  }
 
   response |>
     resp_body_json()
