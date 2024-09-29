@@ -16,7 +16,9 @@ bars(
 \arguments{
 \item{symbols}{One or more symbols.}
 
-\item{timeframe}{Timeframe for bars. Expressed in various units: `Min` or `T` for minutes, `Hour` or `H` for hours, `Day` or `D` for days, `Week` or `W` for weeks and `Month` or `M` for months.}
+\item{timeframe}{Timeframe for bars. Expressed in various units: `Min` or `T`
+for minutes, `Hour` or `H` for hours, `Day` or `D` for days, `Week` or `W`
+for weeks and `Month` or `M` for months.}
 
 \item{start}{Start date (YYYY-MM-DD).}
 

@@ -23,5 +23,6 @@ Get trades.
 }
 \examples{
 \dontrun{
+
 }
 }

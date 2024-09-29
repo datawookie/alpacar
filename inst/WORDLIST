@@ -9,9 +9,11 @@ dplyr
 gmail
 httpuv
 httr
+iex
 jsonlite
 LazyData
 lubridate
+otc
 purrr
 rlang
 RoxygenNote
