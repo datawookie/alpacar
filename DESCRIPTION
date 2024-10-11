@@ -21,3 +21,4 @@ Imports:
     lubridate,
     jsonlite,
     rlang
+URL: https://datawookie.github.io/alpacar/

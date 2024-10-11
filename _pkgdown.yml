@@ -1,0 +1,8 @@
+destination: docs
+url: https://datawookie.github.io/alpacar/
+template:
+  bootstrap: 5
+
+authors:
+  Andrew B. Collier:
+    href: https://datawookie.dev/
