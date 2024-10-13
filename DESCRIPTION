@@ -16,9 +16,11 @@ Imports:
     logger,
     dplyr,
     purrr,
+    here,
     httr2,
     httpuv,
     lubridate,
     jsonlite,
-    rlang
+    rlang,
+    here (>= 1.0.1)
 URL: https://datawookie.github.io/alpacar/
