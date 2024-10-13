@@ -3,10 +3,16 @@ Type: Package
 Title: A wrapper for the Alpaca API
 Version: 0.0.7
 Authors@R:
-    c(person(given = c("Andrew", "B."),
-             family = "Collier",
-             role = c("aut", "cre", "cph"),
-             email = "andrew.b.collier@gmail.com"))
+    c(
+      person(given = c("Andrew", "B."),
+       family = "Collier",
+       role = c("cre", "cph"),
+       email = "andrew.b.collier@gmail.com"),
+      person(given = c("Andrew", "B."),
+       family = "Collier",
+       role = c("aut"),
+       email = "andrew@fathomdata.dev")
+     )
 Description: The Alpaca API provides functionality for building trading algorithms.
 License: GPL-3
 Encoding: UTF-8
