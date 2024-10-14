@@ -10,10 +10,59 @@
 account <- function() {
   details <- GET(base_url(), "account")
 
-  # TODO: Helper function to do this in loop (other fields required too!).
-  details$cash <- as.numeric(details$cash)
-  details$portfolio_value <- as.numeric(details$portfolio_value)
-  details$equity <- as.numeric(details$equity)
+  for (field in c(
+    "cash", "portfolio_value", "equity", "buying_power", "regt_buying_power",
+    "daytrading_buying_power", "effective_buying_power", "options_buying_power",
+    "non_marginable_buying_power", "long_market_value", "short_market_value",
+    "position_market_value", "initial_margin", "maintenance_margin",
+    "last_maintenance_margin"
+  )) {
+    details[[field]] <- as.numeric(details[[field]])
+  }
 
-  details
+  details$created_at <- strptime(details$created_at, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+
+  structure(details, class = "alpacaAccount")
+}
+
+
+#' Generic print() method for Alpaca Account objects.
+#'
+#' @param obj An Alpaca Account object.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' print(account())
+#' account()
+#' }
+print.alpacaAccount <- function(obj) {
+  SEPARATOR <- paste(rep("-", 80), collapse = "")
+  cat(
+    SEPARATOR,
+    glue("Alpaca Account: {obj$account_number} ({obj$id})"),
+    glue("Currency: {obj$currency}   Status: {obj$status}   Created:  {obj$created_at}"),
+    SEPARATOR,
+    "",
+    # glue("Crypto: status = {obj$crypto_status}; tier = {obj$crypto_tier}"),
+    # glue("Options level: approved = {obj$options_approved_level}; trading {obj$options_trading_level}"),
+    "",
+    glue("Balances ({obj$balance_asof}) ===================="),
+    glue("Equity:                        = {sprintf('%9.2f', obj$equity)}"),
+    glue("Cash:                          = {sprintf('%9.2f', obj$cash)}"),
+    glue("Buying power: Nominal          = {sprintf('%9.2f', obj$buying_power)}"),
+    glue("              Regulation T     = {sprintf('%9.2f', obj$regt_buying_power)}"),
+    glue("              Daytrading       = {sprintf('%9.2f', obj$daytrading_buying_power)}"),
+    glue("              Effective        = {sprintf('%9.2f', obj$effective_buying_power)}"),
+    glue("              Non-marginable   = {sprintf('%9.2f', obj$non_marginable_buying_power)}"),
+    glue("              Options          = {sprintf('%9.2f', obj$options_buying_power)}"),
+    glue("Market value: Long             = {sprintf('%9.2f', obj$long_market_value)}"),
+    glue("              Short            = {sprintf('%9.2f', obj$short_market_value)}"),
+    glue("              Position         = {sprintf('%9.2f', obj$position_market_value)}"),
+    glue("Margin:       Initial          = {sprintf('%9.2f', obj$initial_margin)}"),
+    glue("              Maintenance      = {sprintf('%9.2f', obj$maintenance_margin)}"),
+    glue("              Last maintenance = {sprintf('%9.2f', obj$last_maintenance_margin)}"),
+    sep = "\n"
+  )
 }

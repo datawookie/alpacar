@@ -35,10 +35,10 @@ Once installed you can load the package. I also like to increase the
 number of significant figures in `tibble` output (completely optional).
 
 ``` r
-library(alpacar)
-
-# Expand decimal places.
-options(pillar.sigfig = 8)
+  library(alpacar)
+  
+  # Expand decimal places.
+  options(pillar.sigfig = 8)
 ```
 
 ## Authenticate
