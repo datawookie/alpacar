@@ -25,7 +25,6 @@ account <- function() {
   structure(details, class = "alpacaAccount")
 }
 
-
 #' Generic print() method for Alpaca Account objects.
 #'
 #' @param obj An Alpaca Account object.
@@ -38,31 +37,43 @@ account <- function() {
 #' account()
 #' }
 print.alpacaAccount <- function(obj) {
-  SEPARATOR <- paste(rep("-", 80), collapse = "")
+  BLANKS <- paste(rep(" ", 40), collapse = "")
   cat(
-    SEPARATOR,
+    separator(),
     glue("Alpaca Account: {obj$account_number} ({obj$id})"),
-    glue("Currency: {obj$currency}   Status: {obj$status}   Created:  {obj$created_at}"),
-    SEPARATOR,
+    glue("Currency:       {obj$currency}"),
+    glue("Created:        {obj$created_at}"),
+    glue("Status:         {obj$status}"),
+    separator(),
     "",
     # glue("Crypto: status = {obj$crypto_status}; tier = {obj$crypto_tier}"),
     # glue("Options level: approved = {obj$options_approved_level}; trading {obj$options_trading_level}"),
-    "",
-    glue("Balances ({obj$balance_asof}) ===================="),
-    glue("Equity:                        = {sprintf('%9.2f', obj$equity)}"),
-    glue("Cash:                          = {sprintf('%9.2f', obj$cash)}"),
-    glue("Buying power: Nominal          = {sprintf('%9.2f', obj$buying_power)}"),
-    glue("              Regulation T     = {sprintf('%9.2f', obj$regt_buying_power)}"),
-    glue("              Daytrading       = {sprintf('%9.2f', obj$daytrading_buying_power)}"),
-    glue("              Effective        = {sprintf('%9.2f', obj$effective_buying_power)}"),
-    glue("              Non-marginable   = {sprintf('%9.2f', obj$non_marginable_buying_power)}"),
-    glue("              Options          = {sprintf('%9.2f', obj$options_buying_power)}"),
-    glue("Market value: Long             = {sprintf('%9.2f', obj$long_market_value)}"),
-    glue("              Short            = {sprintf('%9.2f', obj$short_market_value)}"),
-    glue("              Position         = {sprintf('%9.2f', obj$position_market_value)}"),
-    glue("Margin:       Initial          = {sprintf('%9.2f', obj$initial_margin)}"),
-    glue("              Maintenance      = {sprintf('%9.2f', obj$maintenance_margin)}"),
-    glue("              Last maintenance = {sprintf('%9.2f', obj$last_maintenance_margin)}"),
+    separator(glue("Balances ({obj$balance_asof})"), char = "-"),
+    glue("Equity:                    = {sprintf('%9.2f', obj$equity)}"),
+    glue("Cash:                      = {sprintf('%9.2f', obj$cash)}"),
+    glue(
+      "Buying power: Nominal      = {sprintf('%9.2f', obj$buying_power)}",
+      "   Daytrading       = {sprintf('%9.2f', obj$daytrading_buying_power)}"
+    ),
+    glue(
+      "              Regulation-T = {sprintf('%9.2f', obj$regt_buying_power)}",
+      "   Non-marginable   = {sprintf('%9.2f', obj$non_marginable_buying_power)}"
+    ),
+    glue(
+      "              Effective    = {sprintf('%9.2f', obj$effective_buying_power)}",
+      "   Options          = {sprintf('%9.2f', obj$options_buying_power)}"
+    ),
+    glue(
+      "Market value: Position     = {sprintf('%9.2f', obj$position_market_value)}",
+      "   Long             = {sprintf('%9.2f', obj$long_market_value)}"
+    ),
+    glue("{BLANKS} Short            = {sprintf('%9.2f', obj$short_market_value)}"),
+    glue(
+      "Margin:       Initial      = {sprintf('%9.2f', obj$initial_margin)}",
+      "   Maintenance      = {sprintf('%9.2f', obj$maintenance_margin)}"
+    ),
+    glue("{BLANKS} Last maintenance = {sprintf('%9.2f', obj$last_maintenance_margin)}"),
+    separator(char = "-"),
     sep = "\n"
   )
 }
