@@ -61,8 +61,8 @@ authenticate(
 
 <!-- List created with the get-endpoints.R script. -->
 
-- [ ] `GET` Get Account
-- [ ] `GET` Get Assets
+- [x] `GET` Get Account
+- [x] `GET` Get Assets
 - [ ] `GET` Get an Asset by ID or Symbol
 - [ ] `GET` Get Option Contracts
 - [ ] `GET` Get an option contract by ID or Symbol
@@ -93,10 +93,10 @@ authenticate(
 - [ ] `DELETE` Delete Symbol from Watchlist
 - [ ] `GET` Get Account Configurations
 - [ ] `PATCH` Account Configurations
-- [ ] `GET` Retrieve Account Activities
+- [x] `GET` Retrieve Account Activities
 - [ ] `GET` Retrieve Account Activities of Specific Type
 - [ ] `GET` Get Market Calendar info
-- [ ] `GET` Get Market Clock info
+- [x] `GET` Get Market Clock info
 - [ ] `GET` Retrieve Crypto Funding Wallets
 - [ ] `GET` Retrieve Crypto Funding Transfers
 - [ ] `POST` Request a New Withdrawal
@@ -106,14 +106,14 @@ authenticate(
 - [ ] `DELETE` Delete a whitelisted address
 - [ ] `GET` Returns the estimated gas fee for a proposed transaction.
 - [ ] `GET` Historical auctions
-- [ ] `GET` Historical bars
+- [x] `GET` Historical bars
 - [ ] `GET` Latest bars
-- [ ] `GET` Condition codes
-- [ ] `GET` Exchange codes
-- [ ] `GET` Historical quotes
-- [ ] `GET` Latest quotes
+- [x] `GET` Condition codes
+- [x] `GET` Exchange codes
+- [x] `GET` Historical quotes
+- [x] `GET` Latest quotes
 - [ ] `GET` Snapshots
-- [ ] `GET` Historical trades
+- [x] `GET` Historical trades
 - [ ] `GET` Latest trades
 - [ ] `GET` Historical auctions (single)
 - [ ] `GET` Historical bars (single symbol)
@@ -281,27 +281,27 @@ authenticate(
 - [ ] `GET` Get Account
 - [ ] `GET` Get Assets
 - [ ] `GET` Get an Asset by ID or Symbol
-- [ ] `GET` Get Option Contracts
+- [x] `GET` Get Option Contracts
 - [ ] `GET` Get an option contract by ID or Symbol
 - [ ] `GET` Retrieve a Specific Announcement
-- [ ] `GET` Retrieve Announcements
+- [x] `GET` Retrieve Announcements
 - [ ] `POST` Create an Order
-- [ ] `GET` Get All Orders
+- [x] `GET` Get All Orders
 - [ ] `DELETE` All Orders
 - [ ] `GET` Get Order by ID
 - [ ] `PATCH` Replace Order by ID
 - [ ] `DELETE` Delete Order by ID
-- [ ] `GET` All Open Positions
+- [x] `GET` All Open Positions
 - [ ] `DELETE` Close All Positions
 - [ ] `GET` Get an Open Position
 - [ ] `DELETE` Close a Position
 - [ ] `POST` Exercise an Options Position
 - [ ] `GET` Get Account Portfolio History
-- [ ] `GET` Get All Watchlists
+- [x] `GET` Get All Watchlists
 - [ ] `POST` Create Watchlist
-- [ ] `GET` Get Watchlist by ID
+- [x] `GET` Get Watchlist by ID
 - [ ] `PUT` Update Watchlist By Id
-- [ ] `POST` Add Asset to Watchlist
+- [x] `POST` Add Asset to Watchlist
 - [ ] `DELETE` Delete Watchlist By Id
 - [ ] `GET` Get Watchlist by Name
 - [ ] `PUT` Update Watchlist By Name
