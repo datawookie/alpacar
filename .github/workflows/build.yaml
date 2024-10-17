@@ -10,6 +10,138 @@ on:
 name: build
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: lintr
+
+      - name: Lint
+        run: lintr::lint_package()
+        shell: Rscript {0}
+
+  # coverage:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     # Tests that are skip_on_cran() still included in coverage report.
+  #     NOT_CRAN: true
+  #     GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+  #     GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: r-lib/actions/setup-r@v2
+  #     - uses: r-lib/actions/setup-pandoc@v2
+  #     - name: Install Ubuntu dependencies
+  #       run: |
+  #         sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
+  #     - uses: r-lib/actions/setup-r-dependencies@v2
+  #       with:
+  #         extra-packages: covr
+  #     - name: Install package
+  #       run: |
+  #         R CMD INSTALL .
+  #     - name: Coverage upload
+  #       run: |
+  #         Rscript -e 'covr::codecov(token="${{ secrets.CODECOV_TOKEN }}")'
+
+  check:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: windows-latest, r: 'release'}
+          - {os: macos-12, r: 'release', arch: 'x86_64', os_version: 'macos-12'}
+          - {os: macos-13, r: 'release', arch: 'x86_64', os_version: 'macos-13'}
+          - {os: macos-14, r: 'release', arch: 'x86_64', os_version: 'macos-14'}
+          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", http-user-agent: "R/4.1.0 (ubuntu-20.04) R (4.1.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions" }
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: ${{ matrix.config.rspm }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+      GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
+
+      - name: Restore R package cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ matrix.config.os_version }}-${{ matrix.config.arch }}-R-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ matrix.config.os_version }}-${{ matrix.config.arch }}-R-${{ hashFiles('.github/R-version') }}-1-
+
+      - name: Install OS dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y pandoc \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            make \
+            libicu-dev \
+            libxml2-dev \
+            libprotobuf-dev \
+            protobuf-compiler \
+            libgpgme11-dev \
+            haveged \
+            git \
+            libfreetype6-dev \
+            libpng-dev \
+            zlib1g-dev \
+            libharfbuzz-dev \
+            libfribidi-dev
+
+      - name: Install dependencies
+        run: |
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
+
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: true
+        run: |
+          options(crayon.enabled = TRUE)
+          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), check_dir = "check")
+          install.packages("devtools")
+          devtools::test()
+        shell: Rscript {0}
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check
+
   build:
     runs-on: ubuntu-latest
     env:
