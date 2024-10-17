@@ -30,3 +30,6 @@ Imports:
     rlang,
     here (>= 1.0.1)
 URL: https://datawookie.github.io/alpacar/
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

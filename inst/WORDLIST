@@ -6,6 +6,7 @@ aut
 bumpversion
 CIP
 Codecov
+Config
 cph
 cre
 Crypto
@@ -39,6 +40,7 @@ rebalancing
 rlang
 RoxygenNote
 SDK
+testthat
 Timeframe
 Watchlist
 watchlists
