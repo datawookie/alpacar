@@ -3,10 +3,14 @@ ATTRIBUTES <- c("fractional_eh_enabled", "has_options", "options_late_close", "p
 
 #' Get assets available for trade and data.
 #'
-#' @param status Asset status (either `"active"` or `"inactive"`). Include both by default.
+#' @param status Asset status (either `"active"`, `"inactive"` or `NULL`). Only
+#'   includes active assets by default.
 #' @param class Asset class. Only option is `"us_equity"`, which is the default.
-#' @param exchange Exchange on which asset listed (one of `"AMEX"`, `"ARCA"`, `"BATS"`, `"NASDAQ"`, `"NYSE"`, `"OTC"`). Include all by default.
-#' @param attributes A vector of attributes (one or more of `"fractional_eh_enabled"`, `"has_options"`, `"options_late_close"`, `"ptp_no_exception"`, `"ptp_with_exception"`).
+#' @param exchange Exchange on which asset listed (one of `"AMEX"`, `"ARCA"`,
+#'   `"BATS"`, `"NASDAQ"`, `"NYSE"`, `"OTC"`). Include all by default.
+#' @param attributes A vector of attributes (one or more of
+#'   `"fractional_eh_enabled"`, `"has_options"`, `"options_late_close"`,
+#'   `"ptp_no_exception"`, `"ptp_with_exception"`).
 #'
 #' @return A data frame.
 #' @export
@@ -16,13 +20,12 @@ ATTRIBUTES <- c("fractional_eh_enabled", "has_options", "options_late_close", "p
 #' assets()
 #' }
 assets_list <- function(
-    status = NULL,
+    status = "active",
     class = "us_equity",
     exchange = NULL,
-    attributes = NULL
-) {
+    attributes = NULL) {
   if (!is.null(status) && !status %in% c("active", "inactive")) {
-    stop("Invalid status: must be 'active' or 'inactive'.")
+    stop("Invalid status: must be 'active', 'inactive' or NULL.")
   }
   if (!is.null(class) && !class %in% c("us_equity")) {
     stop("Invalid class: must be 'us_equity'.")
@@ -48,7 +51,8 @@ assets_list <- function(
     query$attributes <- attributes
   }
 
-  GET(base_url(), "assets", query=query) |>
+  GET(base_url(), "assets", query = query) |>
     map(~ modify_at(.x, "attributes", ~ paste(.x, collapse = ", "))) |>
-    bind_rows()
+    bind_rows() |>
+    rename(asset_id = id)
 }

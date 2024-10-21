@@ -5,14 +5,14 @@
 \title{Get assets available for trade and data.}
 \usage{
 assets_list(
-  status = NULL,
+  status = "active",
   class = "us_equity",
   exchange = NULL,
   attributes = NULL
 )
 }
 \arguments{
-\item{status}{Asset status (either `"active"` or `"inactive"`). Include both by default.}
+\item{status}{Asset status (either `"active"` or `"inactive"`). Only includes active assets by default.}
 
 \item{class}{Asset class. Only option is `"us_equity"`, which is the default.}
 

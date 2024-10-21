@@ -1,6 +1,8 @@
 ACH
 alpacar
+AMEX
 andrew
+ARCA
 AssetId
 aut
 bumpversion
@@ -35,6 +37,7 @@ OAuth
 Onfido
 orderbook
 otc
+ptp
 purrr
 rebalancing
 rlang
