@@ -12,13 +12,17 @@ assets_list(
 )
 }
 \arguments{
-\item{status}{Asset status (either `"active"` or `"inactive"`). Only includes active assets by default.}
+\item{status}{Asset status (either `"active"`, `"inactive"` or `NULL`). Only
+includes active assets by default.}
 
 \item{class}{Asset class. Only option is `"us_equity"`, which is the default.}
 
-\item{exchange}{Exchange on which asset listed (one of `"AMEX"`, `"ARCA"`, `"BATS"`, `"NASDAQ"`, `"NYSE"`, `"OTC"`). Include all by default.}
+\item{exchange}{Exchange on which asset listed (one of `"AMEX"`, `"ARCA"`,
+`"BATS"`, `"NASDAQ"`, `"NYSE"`, `"OTC"`). Include all by default.}
 
-\item{attributes}{A vector of attributes (one or more of `"fractional_eh_enabled"`, `"has_options"`, `"options_late_close"`, `"ptp_no_exception"`, `"ptp_with_exception"`).}
+\item{attributes}{A vector of attributes (one or more of
+`"fractional_eh_enabled"`, `"has_options"`, `"options_late_close"`,
+`"ptp_no_exception"`, `"ptp_with_exception"`).}
 }
 \value{
 A data frame.
