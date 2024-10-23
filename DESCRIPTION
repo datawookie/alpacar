@@ -1,7 +1,7 @@
 Package: alpacar
 Type: Package
 Title: A wrapper for the Alpaca API
-Version: 0.0.8
+Version: 0.0.9
 Authors@R:
     c(
       person(given = c("Andrew", "B."),

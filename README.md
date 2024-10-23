@@ -21,6 +21,13 @@ stable](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https:/
 API documentation can be found
 [here](https://docs.alpaca.markets/docs/).
 
+The functionality for this package is covered in a series of blog posts:
+
+- [Authenticate with Alpaca
+  API](https://datawookie.dev/blog/2024/10/authenticate-with-alpaca-api/)
+- [Listing
+  Assets](https://datawookie.dev/blog/2024/10/listing-alpaca-assets/)
+
 ## Installation
 
 Install from GitHub.
