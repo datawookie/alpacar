@@ -3,6 +3,7 @@ ATTRIBUTES <- c("fractional_eh_enabled", "has_options", "options_late_close", "p
 
 #' Get assets available for trade and data.
 #'
+#' @param id A symbol or asset ID.
 #' @param status Asset status (either `"active"`, `"inactive"` or `NULL`). Only
 #'   includes active assets by default.
 #' @param class Asset class. Only option is `"us_equity"`, which is the default.
@@ -18,8 +19,11 @@ ATTRIBUTES <- c("fractional_eh_enabled", "has_options", "options_late_close", "p
 #' @examples
 #' \dontrun{
 #' assets_list()
+#' AAPL <- assets_list("AAPL")
+#' AMD <- assets_list("03fb07bb-5db1-4077-8dea-5d711b272625")
 #' }
 assets_list <- function(
+    id = NULL,
     status = "active",
     class = "us_equity",
     exchange = NULL,
@@ -51,24 +55,21 @@ assets_list <- function(
     query$attributes <- attributes
   }
 
-  GET(base_url(), "assets", query = query) |>
-    assets_fix()
-}
+  path <- "assets"
+  #
+  # TODO: Make this more robust. If requesting a single asset then discard
+  # other query options.
+  #
+  if (!is.null(id)) {
+    path <- paste(path, id, sep = "/")
+  }
 
-#' Get information on a specific asset.
-#'
-#' @param id A symbol or asset ID.
-#'
-#' @return A data frame.
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' AAPL <- assets_get("AAPL")
-#' AMD <- assets_get("03fb07bb-5db1-4077-8dea-5d711b272625")
-#' }
-assets_get <- function(id) {
-  GET(base_url(), paste("assets", id, sep = "/")) |>
-    list() |>
+  assets <- GET(base_url(), path, query = query)
+
+  # If just a single asset requested then convert into list for fixing.
+  #
+  if (!is.null(id)) assets <- list(assets)
+
+  assets |>
     assets_fix()
 }

@@ -5,6 +5,7 @@
 \title{Get assets available for trade and data.}
 \usage{
 assets_list(
+  id = NULL,
   status = "active",
   class = "us_equity",
   exchange = NULL,
@@ -12,6 +13,8 @@ assets_list(
 )
 }
 \arguments{
+\item{id}{A symbol or asset ID.}
+
 \item{status}{Asset status (either `"active"`, `"inactive"` or `NULL`). Only
 includes active assets by default.}
 
@@ -33,5 +36,7 @@ Get assets available for trade and data.
 \examples{
 \dontrun{
 assets_list()
+AAPL <- assets_list("AAPL")
+AMD <- assets_list("03fb07bb-5db1-4077-8dea-5d711b272625")
 }
 }
