@@ -17,7 +17,7 @@ ATTRIBUTES <- c("fractional_eh_enabled", "has_options", "options_late_close", "p
 #'
 #' @examples
 #' \dontrun{
-#' assets()
+#' assets_list()
 #' }
 assets_list <- function(
     status = "active",
@@ -52,7 +52,23 @@ assets_list <- function(
   }
 
   GET(base_url(), "assets", query = query) |>
-    map(~ modify_at(.x, "attributes", ~ paste(.x, collapse = ", "))) |>
-    bind_rows() |>
-    rename(asset_id = id)
+    assets_fix()
+}
+
+#' Get information on a specific asset.
+#'
+#' @param id A symbol or asset ID.
+#'
+#' @return A data frame.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' AAPL <- assets_get("AAPL")
+#' AMD <- assets_get("03fb07bb-5db1-4077-8dea-5d711b272625")
+#' }
+assets_get <- function(id) {
+  GET(base_url(), paste("assets", id, sep = "/")) |>
+    list() |>
+    assets_fix()
 }

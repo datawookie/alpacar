@@ -32,6 +32,6 @@ Get assets available for trade and data.
 }
 \examples{
 \dontrun{
-assets()
+assets_list()
 }
 }
