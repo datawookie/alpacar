@@ -38,6 +38,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">assets_list</span><span class="op">(</span></span>
+<span>  id <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  status <span class="op">=</span> <span class="st">"active"</span>,</span>
 <span>  class <span class="op">=</span> <span class="st">"us_equity"</span>,</span>
 <span>  exchange <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -49,7 +50,11 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-status">status<a class="anchor" aria-label="anchor" href="#arg-status"></a></dt>
+<dl><dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
+<dd><p>A symbol or asset ID.</p></dd>
+
+
+<dt id="arg-status">status<a class="anchor" aria-label="anchor" href="#arg-status"></a></dt>
 <dd><p>Asset status (either `"active"`, `"inactive"` or `NULL`). Only
 includes active assets by default.</p></dd>
 
@@ -77,7 +82,9 @@ includes active assets by default.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu">assets</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">assets_list</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">AAPL</span> <span class="op">&lt;-</span> <span class="fu">assets_list</span><span class="op">(</span><span class="st">"AAPL"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">AMD</span> <span class="op">&lt;-</span> <span class="fu">assets_list</span><span class="op">(</span><span class="st">"03fb07bb-5db1-4077-8dea-5d711b272625"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
