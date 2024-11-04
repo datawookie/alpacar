@@ -7,8 +7,7 @@
 #' \dontrun{
 #' positions_list()
 #' }
-positions_list <- function(
-) {
+positions_list <- function() {
   GET(base_url(), "positions") |>
     bind_rows()
 }

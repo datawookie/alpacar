@@ -14,8 +14,7 @@ activity_fix <- function(quotes) {
 #' \dontrun{
 #' account_activity()
 #' }
-account_activity <- function(
-) {
+account_activity <- function() {
   GET(base_url(), "account/activities") |>
     bind_rows() |>
     activity_fix()

@@ -14,16 +14,15 @@
 #' # By default retrieves all actions for last 90 days.
 #' actions()
 #' # Get only dividends for specific range of dates.
-#' actions("dividend", start="2024-07-01", until="2024-09-01")
+#' actions("dividend", start = "2024-07-01", until = "2024-09-01")
 #' # Either date can be omitted, in which case get 90 days from/until date.
-#' actions("merger", start="2024-07-01")
-#' actions("spinoff", until="2024-09-01")
+#' actions("merger", start = "2024-07-01")
+#' actions("spinoff", until = "2024-09-01")
 #' }
 actions <- function(
     type = c("dividend", "merger", "spinoff", "split"),
     since = NULL,
-    until = NULL
-) {
+    until = NULL) {
   if (!is.null(since)) since <- as.Date(since)
   if (!is.null(until)) until <- as.Date(until)
 
@@ -47,6 +46,6 @@ actions <- function(
   query$since <- since
   query$until <- until
 
-  GET(base_url(), "corporate_actions/announcements", query=query) |>
+  GET(base_url(), "corporate_actions/announcements", query = query) |>
     bind_rows()
 }

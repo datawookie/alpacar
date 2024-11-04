@@ -8,11 +8,13 @@ aut
 bumpversion
 CIP
 Codecov
+cond
 Config
 cph
 cre
 Crypto
 datawookie
+DDTHH
 dev
 dotenv
 dplyr
@@ -43,9 +45,12 @@ rebalancing
 rlang
 RoxygenNote
 SDK
+SSZ
 testthat
 Timeframe
+trailling
 Watchlist
+watchlist
 watchlists
 Watchlists
 YYYY
